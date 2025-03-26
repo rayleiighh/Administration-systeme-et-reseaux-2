@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  web:
+    build: ./nginx  # Il faut pointer vers le bon dossier
+    container_name: web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./html:/var/www/html  # On monte tout le dossier html
+      - ./nginx/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - php
+    networks:
+      - dmz_net
+
+  php:
+    build: ./php
+    container_name: php
+    restart: unless-stopped
+    volumes:
+      - ./html:/var/www/html
+    networks:
+      - dmz_net
+      - db_net
+
+  mariadb:
+    image: mariadb:11.1
+    container_name: mariadb
+    restart: unless-stopped
+    env_file:
+      - db/root.env
+      - db/db.env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./db/sql:/docker-entrypoint-initdb.d
+    networks:
+      - db_net
+
+networks:
+  dmz_net:
+    driver: bridge
+  db_net:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+  letsencrypt:

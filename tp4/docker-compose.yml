@@ -1,0 +1,11 @@
+services:
+  dns:
+    build: .
+    container_name: dns
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    volumes:
+      - ./configFile:/etc/bind
+      - ./cache:/var/cache/bind

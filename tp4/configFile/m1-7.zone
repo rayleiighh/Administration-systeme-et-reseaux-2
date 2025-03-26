@@ -1,0 +1,14 @@
+$ORIGIN m1-7.ephec-ti.be.
+$TTL 3600
+@       IN SOA  ns.m1-7.ephec-ti.be. admin.m1-7.ephec-ti.be. (
+        2025022701 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400      ; Minimum TTL
+)
+@       IN NS    ns.m1-7.ephec-ti.be.
+
+ns      IN A     54.36.182.211
+
+www     IN A     54.36.182.211
