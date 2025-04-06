@@ -20,6 +20,8 @@ services:
     build: ./php
     container_name: php
     restart: unless-stopped
+    env_file:
+      - db/db.env
     volumes:
       - ./html:/var/www/html
     networks:
